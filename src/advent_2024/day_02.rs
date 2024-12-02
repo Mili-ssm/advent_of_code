@@ -76,8 +76,6 @@ pub fn part_2(list: &[Vec<usize>]) -> u64 {
     result
 }
 
-//FIXME: This is not working
-
 #[inline]
 pub fn part_2_opt(list: &[Vec<usize>]) -> u64 {
     let mut result: u64 = 0;
@@ -90,19 +88,14 @@ pub fn part_2_opt(list: &[Vec<usize>]) -> u64 {
             continue;
         };
 
-        let mut new_line = line.to_vec();
-        new_line.remove(idx);
-        if find_error(&new_line).is_none() {
-            result += 1;
-            continue;
-        }
-
-        let mut new_line = line.to_vec();
-        new_line.remove(idx + 1);
-        if find_error(&new_line).is_none() {
-            result += 1;
+        for i in 0..(idx + 2) {
+            let mut new_line = line.to_vec();
+            new_line.remove(i);
+            if find_error(&new_line).is_none() {
+                result += 1;
+                break;
+            }
         }
     }
-
     result
 }
