@@ -9,12 +9,13 @@ path = "src/lib.rs"
 
 [[bench]]
 name = "2024"
-path = "src/advent_2024/bench.rs"
+path = "benchmarks/bench_2024.rs"
 harness = false
 
 
 [dependencies]
 criterion = "0.5.1"
+rand = "0.8.5"
 rayon = "1.10.0"
 serde = "1.0.215"
 
@@ -24,6 +25,13 @@ codegen-units = 1
 opt-level = 3
 debug = false
 panic = "abort"
+overflow-checks = false
+
+[profile.bench]
+lto = true
+codegen-units = 1
+opt-level = 3
+debug = false
 overflow-checks = false
 
 [profile.dev]
