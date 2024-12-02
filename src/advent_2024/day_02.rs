@@ -25,7 +25,7 @@ pub fn loader() -> Vec<Vec<usize>> {
 }
 
 #[inline]
-fn finde_error(line: &[usize]) -> Option<usize> {
+fn find_error(line: &[usize]) -> Option<usize> {
     let checking = if line[0] < line[1] {
         |a, b| a < b && a + 3 >= b
     } else {
@@ -45,7 +45,7 @@ pub fn part_1(list: &[Vec<usize>]) -> u64 {
     let mut result: u64 = list.len() as u64;
 
     for line in list.iter() {
-        if finde_error(line).is_some() {
+        if find_error(line).is_some() {
             result -= 1;
         }
     }
@@ -58,7 +58,7 @@ pub fn part_2(list: &[Vec<usize>]) -> u64 {
     let mut result: u64 = 0;
 
     for line in list.iter() {
-        if finde_error(line).is_none() {
+        if find_error(line).is_none() {
             result += 1;
             continue;
         }
@@ -66,7 +66,7 @@ pub fn part_2(list: &[Vec<usize>]) -> u64 {
         for i in 0..line.len() {
             let mut new_line = line.to_vec();
             new_line.remove(i);
-            if finde_error(&new_line).is_none() {
+            if find_error(&new_line).is_none() {
                 result += 1;
                 break;
             }
@@ -83,19 +83,25 @@ pub fn part_2_opt(list: &[Vec<usize>]) -> u64 {
     let mut result: u64 = 0;
 
     for line in list.iter() {
-        if let Some(idx) = finde_error(line) {
-            let mut new_line = line.to_vec();
-            new_line.remove(idx);
+        let idx = if let Some(idx) = find_error(line) {
+            idx
+        } else {
+            result += 1;
+            continue;
+        };
 
-            let mut new_line2 = line.to_vec();
-            new_line2.remove(idx + 1);
-
-            if finde_error(&new_line).is_some() && finde_error(&new_line2).is_some() {
-                continue;
-            }
+        let mut new_line = line.to_vec();
+        new_line.remove(idx);
+        if find_error(&new_line).is_none() {
+            result += 1;
+            continue;
         }
 
-        result += 1;
+        let mut new_line = line.to_vec();
+        new_line.remove(idx + 1);
+        if find_error(&new_line).is_none() {
+            result += 1;
+        }
     }
 
     result
