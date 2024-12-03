@@ -1,5 +1,5 @@
-use advent_of_code::advent_2024::{day_01, day_02};
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use advent_of_code::advent_2024::{day_01, day_02, day_03};
+use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
 use rand::distributions::Uniform;
 use rand::{Rng, thread_rng};
 
@@ -69,6 +69,21 @@ pub fn day_02(c: &mut Criterion) {
     group.bench_function("Optimized", |b| b.iter(|| day_02::part_2_opt(&list)));
 }
 
-criterion_group!(advent_2024, day_01, day_02);
+pub fn day_03(c: &mut Criterion) {
+    //Result
+    let text = day_03::loader();
+    println!("Day 03 | Part 1: {:?}", day_03::part_1(&text));
+    //println!("Day 03 | Part 2: {:?}", day_02::part_2(&list));
+    //println!("Day 03 | Part 2: {:?}", day_02::part_2_opt(&list));
+
+    //Part 1
+    c.bench_function("Day_03/Loader", |b| b.iter(|| day_03::loader()));
+    c.bench_function("Day_03/Part_1", |b| b.iter(|| day_03::part_1(&text)));
+    //let mut group = c.benchmark_group("Day_02/Part_2");
+    //group.bench_function("Baseline", |b| b.iter(|| day_02::part_2(&list)));
+    //group.bench_function("Optimized", |b| b.iter(|| day_02::part_2_opt(&list)));
+}
+
+criterion_group!(advent_2024, day_01, day_02, day_03);
 
 criterion_main!(advent_2024);
