@@ -18,26 +18,30 @@ serde = "1.0.215"
 test-log = "0.2.16"
 
 [profile.release]
+debug = false
 lto = true
 codegen-units = 1
 opt-level = 3
-debug = false
 panic = "abort"
 overflow-checks = false
 
 [profile.bench]
+debug = false
 lto = true
 codegen-units = 1
 opt-level = 3
-debug = false
 overflow-checks = false
 
 [profile.dev]
+debug = true
 lto = false
 codegen-units = 1
 opt-level = 0
-debug = true
 
 [profile.test]
 debug = true
-debug-assertions = true
+lto = true
+codegen-units = 1
+opt-level = 3
+panic = "abort"
+overflow-checks = false
