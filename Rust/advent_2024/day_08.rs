@@ -73,39 +73,32 @@ pub fn part_1(map: &mut Map) -> u64 {
                 break;
             }
 
-            let x_distance = (antenna_1.position.x - antenna_2.position.x).abs();
-            let y_distance = (antenna_1.position.y - antenna_2.position.y).abs();
+            let x_distance = antenna_1.position.x - antenna_2.position.x;
+            let y_distance = antenna_1.position.y - antenna_2.position.y;
 
-            let (x1, x2) = if antenna_1.position.x >= antenna_2.position.x {
-                (
-                    antenna_1.position.x + x_distance,
-                    antenna_2.position.x - x_distance,
-                )
-            } else {
-                (
-                    antenna_1.position.x - x_distance,
-                    antenna_2.position.x + x_distance,
-                )
+            let anti_node = Position {
+                x: antenna_1.position.x + x_distance,
+                y: antenna_1.position.y + y_distance,
             };
-
-            let (y1, y2) = if antenna_1.position.y >= antenna_2.position.y {
-                (
-                    antenna_1.position.y + y_distance,
-                    antenna_2.position.y - y_distance,
-                )
-            } else {
-                (
-                    antenna_1.position.y - y_distance,
-                    antenna_2.position.y + y_distance,
-                )
-            };
-
-            if 0 <= x1 && x1 < map.bounds.x && 0 <= y1 && y1 < map.bounds.y {
-                anti_nodes.insert(Position { x: x1, y: y1 });
+            if 0 <= anti_node.x
+                && anti_node.x < map.bounds.x
+                && 0 <= anti_node.y
+                && anti_node.y < map.bounds.y
+            {
+                anti_nodes.insert(anti_node);
             }
 
-            if 0 <= x2 && x2 < map.bounds.x && 0 <= y2 && y2 < map.bounds.y {
-                anti_nodes.insert(Position { x: x2, y: y2 });
+            let anti_node = Position {
+                x: antenna_2.position.x - x_distance,
+                y: antenna_2.position.y - y_distance,
+            };
+
+            if 0 <= anti_node.x
+                && anti_node.x < map.bounds.x
+                && 0 <= anti_node.y
+                && anti_node.y < map.bounds.y
+            {
+                anti_nodes.insert(anti_node);
             }
         }
     }
@@ -130,8 +123,8 @@ pub fn part_2(map: &mut Map) -> u64 {
             let y_distance = antenna_1.position.y - antenna_2.position.y;
 
             let mut anti_node = Position {
-                x: antenna_2.position.x + x_distance,
-                y: antenna_2.position.y + y_distance,
+                x: antenna_1.position.x,
+                y: antenna_1.position.y,
             };
 
             while 0 <= anti_node.x
@@ -141,18 +134,13 @@ pub fn part_2(map: &mut Map) -> u64 {
             {
                 anti_nodes.insert(anti_node);
 
-                anti_node = Position {
-                    x: anti_node.x + x_distance,
-                    y: anti_node.y + y_distance,
-                };
+                anti_node.x += x_distance;
+                anti_node.y += y_distance;
             }
 
-            let x_distance = -1 * x_distance;
-            let y_distance = -1 * y_distance;
-
             let mut anti_node = Position {
-                x: antenna_1.position.x + x_distance,
-                y: antenna_1.position.y + y_distance,
+                x: antenna_2.position.x,
+                y: antenna_2.position.y,
             };
 
             while 0 <= anti_node.x
@@ -162,10 +150,8 @@ pub fn part_2(map: &mut Map) -> u64 {
             {
                 anti_nodes.insert(anti_node);
 
-                anti_node = Position {
-                    x: anti_node.x + x_distance,
-                    y: anti_node.y + y_distance,
-                };
+                anti_node.x -= x_distance;
+                anti_node.y -= y_distance;
             }
         }
     }
