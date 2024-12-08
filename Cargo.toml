@@ -40,8 +40,8 @@ opt-level = 0
 
 [profile.test]
 debug = true
-lto = true
-codegen-units = 1
-opt-level = 3
-panic = "abort"
-overflow-checks = false
+# lto = true
+# codegen-units = 1
+# opt-level = 3
+# panic = "abort"
+# overflow-checks = false
