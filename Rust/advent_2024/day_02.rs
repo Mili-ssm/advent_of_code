@@ -1,5 +1,7 @@
 use std::collections::BTreeMap;
 
+use log::{debug, error, info, warn};
+
 use crate::tools::txt_reader::read_lines;
 
 #[inline]
@@ -53,6 +55,12 @@ pub fn part_1(list: &[Vec<usize>]) -> u64 {
     result
 }
 
+#[test_log::test]
+fn test_part_1() {
+    let list = loader();
+    info!(" Part 1 [] : {}", part_1(&list));
+}
+
 #[inline]
 pub fn part_2(list: &[Vec<usize>]) -> u64 {
     let mut result: u64 = 0;
@@ -74,6 +82,12 @@ pub fn part_2(list: &[Vec<usize>]) -> u64 {
     }
 
     result
+}
+
+#[test_log::test]
+fn test_part_2() {
+    let list = loader();
+    info!(" Part 2 [BaseLine] : {}", part_2(&list));
 }
 
 #[inline]
@@ -98,4 +112,10 @@ pub fn part_2_opt(list: &[Vec<usize>]) -> u64 {
         }
     }
     result
+}
+
+#[test_log::test]
+fn test_part_2_opt() {
+    let list = loader();
+    info!(" Part 2 [Optimized] : {}", part_2_opt(&list));
 }

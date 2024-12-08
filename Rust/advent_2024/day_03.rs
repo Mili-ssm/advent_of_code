@@ -1,5 +1,7 @@
 use std::num::ParseIntError;
 
+use log::info;
+
 use crate::tools::txt_reader::read_lines;
 
 struct Token<T> {
@@ -105,4 +107,10 @@ pub fn part_1(text: &str) -> usize {
         position += 1;
     }
     result
+}
+
+#[test_log::test]
+fn test_part_1() {
+    let list = loader();
+    info!(" Part 1 [] : {}", part_1(&list));
 }

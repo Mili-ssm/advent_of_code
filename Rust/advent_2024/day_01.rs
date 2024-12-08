@@ -1,6 +1,9 @@
-use std::collections::BTreeMap;
+use std::{collections::BTreeMap, env};
 
 use crate::tools::txt_reader::read_lines;
+
+#[cfg(test)]
+use log::{debug, info};
 
 #[inline]
 pub fn loader() -> (Vec<usize>, Vec<usize>) {
@@ -40,6 +43,12 @@ pub fn part_1(list_a: &[usize], list_b: &[usize]) -> u64 {
     result
 }
 
+#[test_log::test]
+fn test_part_1() {
+    let (list_a, list_b) = loader();
+    info!("Part 1 [] : {}", part_1(&list_a, &list_b));
+}
+
 #[inline]
 pub fn part_2_dict(list_a: &[usize], list_b: &[usize]) -> u64 {
     let mut dict_b = BTreeMap::new();
@@ -53,6 +62,12 @@ pub fn part_2_dict(list_a: &[usize], list_b: &[usize]) -> u64 {
         result += (dict_b.get(a).unwrap_or(&0) * a) as u64;
     }
     result
+}
+
+#[test_log::test]
+fn test_part_2_dict() {
+    let (list_a, list_b) = loader();
+    info!("Part 2 [DICT] : {}", part_2_dict(&list_a, &list_b));
 }
 
 #[inline]
@@ -74,4 +89,10 @@ pub fn part_2_vec(list_a: &[usize], list_b: &[usize]) -> u64 {
     }
 
     result
+}
+
+#[test_log::test]
+fn test_part_2_vec() {
+    let (list_a, list_b) = loader();
+    info!("Part 2 [VEC] : {}", part_2_vec(&list_a, &list_b));
 }
